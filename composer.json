@@ -6,7 +6,8 @@
 	"authors": [
 		{
 			"name": "Niels Fyhring",
-			"email": "niels@fyhring.net"
+			"email": "niels@fyhring.net",
+			"role": "Developer"
 		}
 	],
 	"require": {
