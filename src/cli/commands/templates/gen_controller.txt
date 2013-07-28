@@ -1,0 +1,21 @@
+<?php
+	
+
+	class {{name}}_Controller extends {{base}}_Controller {
+		
+		
+		public function index() {
+
+			// 
+
+		}
+
+		public function show() {
+
+			// 
+
+		}
+
+
+
+	}

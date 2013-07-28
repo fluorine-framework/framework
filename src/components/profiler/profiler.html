@@ -1,0 +1,294 @@
+<!-- #PROFILER!! -->
+<style type="text/css">
+
+.fluorine_push {
+	height: 55px;
+}
+.fluorine_profiler_container {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	min-width: 850px;
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+	-webkit-font-smoothing: antialiased;
+}
+.fluorine_profiler_tabs {
+	display: block;
+	height: 0px;
+	width: 100%;
+	background: #FFF;
+	-ms-overflow-y: auto;
+	overflow-y: auto;
+	-webkit-transition: height .5s;
+	-moz-transition: height .5s;
+	-o-transition: height .5s;
+	-ms-transition: height .5s;
+	transition: height .5s;	
+}
+.fluorine_profiler_tabs.fluorine_tabs_shown {
+	height: 350px;
+}
+.fluorine_profiler_tab {
+	display: none;
+}
+.fluorine_profiler_tab > header {
+	background: #444;
+	padding: 7px 30px;
+}
+.fluorine_profiler_tab > header > h4 {
+	font-size: 17px;
+	color: #DFDFDF;
+	margin: 0px;
+	padding: 0px;
+}
+.fluorine_profiler_container > header {
+	height: 50px;
+	background: #323232;
+	border-top: 5px solid #6F6D6D;
+}
+.fluorine_profiler_container > header ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+.fluorine_profiler_container > header ul li {
+	float: left;
+	padding: 0 5px;
+}
+.fluorine_profiler_container > header li a, .fluorine_profiler_link {
+	color: #c9ef2d;
+	text-decoration: none;
+	padding: 17px 10px;
+	display: block;
+}
+.fluorine_profiler_container > header li a:hover, 
+.fluorine_profiler_link:hover, 
+.fluorine_link_active {
+	background: #444;
+}
+.fluorine_profiler_container > header ul li span {
+	padding: 15px 10px;
+	display: block;
+	color: #e4f9e0;
+}
+.fluorine_profiler_container > header ul li label {
+	background: #505050;
+	padding: 4px;
+	margin-top: -4px;
+	display: inline;
+}
+.fluorine_profiler_list {
+
+}
+.fluorine_profiler_tab_none {
+	height: 138px;
+	padding: 148px 0 144px;
+	display: block;
+	text-align: center;
+	width: 100%;
+	cursor: default !IMPORTANT;
+}
+.fluorine_profiler_list section {
+	background: #f6f6f6;
+	float: left;
+	height: 24px;
+	width: 100%;
+	cursor: pointer;
+	-webkit-transition: height .5s;
+	-moz-transition: height .5s;
+	-o-transition: height .5s;
+	-ms-transition: height .5s;
+	transition: height .5s;
+}
+.fluorine_profiler_list section:nth-child(even) {
+	background: #e4e4e4;
+	height: 24px;
+}
+.fluorine_row_open {
+	height: 140px !IMPORTANT;
+}
+.fluorine_profiler_list section aside {
+	float: left;
+	width: 20.117647058824%;
+	padding: 0 2%;
+	height: 100%;
+	border-right: 1px solid #bebebe;
+	margin: 0px;
+}
+.fluorine_profiler_list section aside span {
+	padding-top: 4px;
+	display: inline-block;
+}
+.fluorine_profiler_list section article {
+	float: left;
+	display: block;
+	width: 73.764705882353%;
+	height: 16px;
+	padding: 4px 1%;
+	overflow-y: scroll;
+	-webkit-transition: height .5s;
+	-moz-transition: height .5s;
+	-o-transition: height .5s;
+	-ms-transition: height .5s;
+	transition: height .5s;
+}
+.fluorine_profiler_clearfix {
+	clear: both;
+	height: 0px;
+	width: 0px;
+}
+.fluorine_row_open article {
+	height: 135px !IMPORTANT;
+}
+
+
+
+@-moz-document url-prefix() { 
+	
+	.fluorine_profiler_container > header {
+		height: 51px !IMPORTANT;
+	}
+
+}
+</style>
+
+<script>
+if(!window.jQuery) {
+	var script = document.createElement('script');
+	script.type = "text/javascript";
+	script.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js";
+	document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+var fluorine = {};
+
+	fluorine.init = function() {
+
+		/*if(!window.jQuery) {
+			if(fluorine.tried === true) {
+				alert('Failed to load jQuery!');
+				return false;
+			} else {
+				fluorine.tried = true;
+				setTimeout(function() {
+					fluorine.init();
+				}, 500);
+				return false;
+			}
+		}*/
+		fluorine.fadeIn();
+		fluorine.tabs();
+
+	};
+
+	fluorine.fadeIn = function() {
+		if(!window.jQuery) return false;
+		
+		jQuery('.fluorine_profiler_container').fadeIn();
+	};
+
+	fluorine.tabs = function() {
+		if(!window.jQuery) return false;
+
+		jQuery('.fluorine_tab_toggle').click( function(event) { fluorine.openTab( jQuery(this), event ); });
+		jQuery('.fluorine_profiler_list section').click( function() { fluorine.openRow( jQuery(this) ); });
+
+	};
+
+	fluorine.openTab = function(_this, event) {
+
+		event.preventDefault();
+
+		var tab = _this.attr('data-tab');
+		var el  = jQuery('.fluorine_profiler_'+ tab);
+
+		var tabs = jQuery('.fluorine_profiler_tabs');
+		if(! el) return false;
+
+		if(fluorine.tabs_opened === false) {
+			tabs.addClass('fluorine_tabs_shown');
+			el.stop().delay(400).fadeIn();
+			_this.addClass('fluorine_link_active');
+			fluorine.tabs_opened = true;
+			fluorine.current_tab = tab;
+		} else {
+			
+			if(tab == fluorine.current_tab) {
+				// If user click on the current tab, close it.
+				el.stop().fadeOut();
+				tabs.removeClass('fluorine_tabs_shown');
+				_this.removeClass('fluorine_link_active');
+				fluorine.tabs_opened = false;
+				fluorine.current_tab = null;
+			} else {
+
+				jQuery('.fluorine_profiler_'+ fluorine.current_tab).stop().fadeOut();
+				el.stop().delay(400).fadeIn();
+				jQuery('.fluorine_link_active').removeClass('fluorine_link_active');
+				_this.addClass('fluorine_link_active');
+				fluorine.current_tab = tab;
+			}
+		}
+		return false;
+
+	};
+
+	fluorine.openRow = function(_this) {
+
+		if( _this.hasClass('fluorine_row_open') == false &&
+			_this.hasClass('fluorine_profiler_tab_none') == false) {
+
+			jQuery('.fluorine_row_open').removeClass('fluorine_row_open');
+			_this.addClass('fluorine_row_open');
+
+		} else {
+			_this.removeClass('fluorine_row_open');
+		}
+
+	}
+
+	fluorine.tabs_opened = false;
+	fluorine.current_tab = null;
+	fluorine.tried = false;
+	
+	jQuery(document).ready(function() {
+		fluorine.init();
+	});
+
+</script>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
+
+<div class="fluorine_push"></div>
+<div class="fluorine_profiler_container" style="display: none;">
+	
+	<header>
+		<ul>
+			<li><a class="fluorine_profiler_link fluorine_tab_toggle" data-tab="queries" href="#">SQL Queries</a></li>
+			<li><a class="fluorine_profiler_link fluorine_tab_toggle" data-tab="checkpoints" href="#">Checkpoints</a></li>
+			<li><span>Memory usage <label>{memUsage}</label></span></li>
+			<li><span>Execution time <label>{totalTime}</label></span></li>
+		</ul>
+	</header>
+
+	<div class="fluorine_profiler_tabs">
+		<div class="fluorine_profiler_queries fluorine_profiler_tab">
+			<header><h4>SQL Queries</h4></header>
+			<section class="fluorine_profiler_list">
+				{queries}
+				<div class="fluorine_profiler_clearfix"></div>
+			</section>
+		</div>
+		
+		<div class="fluorine_profiler_checkpoints fluorine_profiler_tab">
+			<header><h4>Checkpoints</h4></header>
+			<section class="fluorine_profiler_list">
+				{checkpoints}
+			</section>
+		</div>
+	</div>
+
+	
+</div>
