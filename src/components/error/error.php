@@ -51,7 +51,7 @@
 
 			$data = preg_replace($search, $replace, $html);
 
-			echo "CODE: ". $code ."\n<br />\n";
+			#echo "CODE: ". $code ."\n<br />\n";
 			/*
 			 * If status is on production, we don't wanna show an exception error so
 			 * we can give an Http Error 500.

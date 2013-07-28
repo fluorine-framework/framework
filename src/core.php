@@ -1,5 +1,6 @@
 <?php
 	
+	use Component\Url;
 	use Component\Event;
 	use Component\Error;
 	use Component\Request;
@@ -62,7 +63,7 @@
 
 	// Components
 	require_once(COMPONENTS . 'url.php');
-	require_once(COMPONENTS . 'files/getfile.php');
+	require_once(COMPONENTS . 'files/files.php');
 	
 	class App {
 		
@@ -70,20 +71,19 @@
 		public static function boot() {
 			
 			Config::init();
-			Request::init();
 
 			require_once(SYS .'model/database/connector.php');
 			require_once(COMPONENTS . 'database/nitrogen/nitrogen.php');
 			require_once(COMPONENTS . 'database/nitrogen/builder.php');
 			require_once(SYS . 'model/model.php');
 			
-			$boot = new Bootstrap( Config::$path );
-			URL::init();
-
 			Autoload::load();
-
+			Request::init();
+			Url::init();
 			Log::init();
-			Template\Menu::init();
+
+
+			$boot = new Bootstrap( Config::$path );
 
 			$boot->getPage();
 			$boot->getContent();

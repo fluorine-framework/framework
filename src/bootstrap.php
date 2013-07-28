@@ -1,8 +1,9 @@
 <?php
 	
-	
+	use Component\Url;
 	use Component\File;
 	use Component\Error;
+	use Rain\TPL;
 
 	/*************************
 	 *                       *
@@ -10,8 +11,6 @@
 	 *     Niels Fyhring     *
 	 *                       *
 	 *************************/
-
-	require_once(SYS .'raintpl/rain.tpl.class.php');
 
 	class Bootstrap {
 
@@ -30,15 +29,10 @@
 		*/
 		public function __construct($path) {
 
-			$this->uri 		= $_SERVER['REQUEST_URI'];
-			$this->method 	= $_SERVER['REQUEST_METHOD'];
+			$this->uri 		= Url::uri();
+			$this->method 	= Url::method();
 
-			if( strpos($this->uri, '?') !== false ) {
-				$_queryString = explode('?', $this->uri);
-				$this->uri = $_queryString[0];
-			}
-
-			$this->removeUri($path);
+			$this->uri = Url::reduceUri($path);
 
 			$_uri = explode('/', $this->uri);
 			$uri = array();
@@ -59,19 +53,6 @@
 
 		}
 
-		/**
-		 * Removes some of the path in the uri. Used if the system is not running
-		 * on the top level of the domain.
-		 * @param 	string 	$path
-		 * @return 	void
-		 */
-		private function removeUri($path) {
-
-			$_uri = explode($path, $this->uri);
-			$this->uri = $_uri[1];
-
-			define('URI', $this->uri);
-		}
 
 		/**
 		 * Finds the route and gets the closure or controller
@@ -85,7 +66,7 @@
 		public function getPage() {
 
 
-			$exp = explode('/', URL::uri() );
+			$exp = explode('/', Url::uri() );
 			$i = count($exp);
 			$_data = null;
 
@@ -93,7 +74,7 @@
 				
 				$s = implode('/', $exp);
 
-				if( URL::uri() == '') $s = '/';
+				if( Url::uri() == '') $s = '/';
 
 				$_data = Router::find($this->method, $s);
 				if($_data !== false) break;
@@ -129,22 +110,19 @@
 					return true;
 				}
 
-				$_d = explode('@', $data['func']);
-				$controller = $_d[0];
-				$method 	= $_d[1];
+				list($controller, $method) = explode('@', $data['func']);
 
-				$controller_name = $controller. '_Controller';
 
 				if( !is_file(APP.'controller/'. $controller .'.php')) return Error::register('controller_100');
-
 				require_once(APP .'controller/'. $controller .'.php');
 
+				$controller_name = $controller. '_Controller';
 				if( !class_exists($controller_name)) return Error::register('controller_101');
-
+				
 				$ct = new $controller_name();
 				$restful = (isset($ct->restful)) ? $ct->restful : false;
 				$r_method  = ($restful === true) ? $this->method .'_' : '';
-
+				
 				$method_name = $r_method . $method;
 				if( !method_exists($controller_name, $method_name)) return Error::register('controller_102');
 
@@ -169,14 +147,19 @@
 
 			$tplDir = ($this->isView) ? $this->view->tpl : Config::$template;
 
-			raintpl::configure('base_url', null);
-			raintpl::configure('tpl_dir', APP .'template/'. $tplDir .'/');
-			raintpl::configure('cache_dir', APP .'tmp/');
-			raintpl::configure('php_enabled', true);
-			raintpl::configure('tpl_ext', 'php');
+			$config = array(
+				'base_url'		=> null,
+				'tpl_dir'		=> APP .'template/'. $tplDir .'/',
+				'cache_dir'		=> APP .'tmp/',
+				'debug'			=> true,
+				'php_enabled'	=> true,
+				'tpl_ext'		=> 'php'
+			);
+
+			Tpl::configure($config);
 
 
-			$tpl = new RainTPL;
+			$tpl = new Tpl;
 			$tpl->assign('isView', $this->isView);
 			$tpl->assign('title', Config::$data->title);
 
@@ -223,21 +206,3 @@
 
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
