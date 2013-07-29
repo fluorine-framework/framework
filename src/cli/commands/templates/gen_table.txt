@@ -1,0 +1,19 @@
+<?php
+	
+	namespace Database\Table;
+	use Component\Nitrogen;
+
+	class {{name}} extends Nitrogen implements Table {
+
+		protected $table = '{{tablename}}';
+
+		/*
+		 * Contains an array of fields that cannot be shown. 
+		 */
+		public function hidden() {
+			return array(
+				'password',
+			);
+		}
+
+	}

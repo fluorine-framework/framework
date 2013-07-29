@@ -1,0 +1,17 @@
+<?php
+
+	
+	namespace Model;
+
+	class {{class_name}} extends Model {
+
+
+		public function init() {
+
+			// Run something in all methods.
+			// This method is just an alternative
+			// to the normal contructer method.
+
+		}
+
+	}

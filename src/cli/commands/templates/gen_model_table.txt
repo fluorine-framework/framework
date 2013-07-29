@@ -1,0 +1,68 @@
+<?php
+
+	
+	namespace Model;
+	use Database\Table\User;
+
+	class {{class_name}} extends Model {
+
+		
+		protected ${{name}};
+
+		public function init() {
+
+			// Run something in all methods.
+			// This method is just an alternative
+			// to the normal contructer method.
+			
+
+			// Example
+			$this->{{name}} = new {{name}};
+
+		}
+
+		public function getAll{{name}}s() {
+			
+			// Returns all entities.
+			return $this->{{name}}
+							->select()
+							->fetch_all();
+
+		}
+		
+		public function get{{name}}($id) {
+
+			// Returns a specific entity.
+			return $this->{{name}}
+							->find($id)
+							->fetch();
+
+		}
+
+		public function save{{name}}((array) $data) {
+
+			// Saves a new entity.
+			return $this->{{name}}
+							->insert($data);
+
+		}
+
+		public function update{{name}}($id, (array) $data) {
+
+			// Updates a specific entity.
+			return $this->{{name}}
+							->where_id($id)
+							->update($data);
+
+		}
+
+		public function delete{{name}}($id) {
+
+			// Deletes a specific entity.
+			return $this->{{name}}
+							->where_id($id)
+							->delete();
+
+		}
+
+	}

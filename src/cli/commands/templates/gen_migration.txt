@@ -1,0 +1,22 @@
+<?php
+	
+	namespace Database\Migration;
+
+	class {{name}} implements Migration {
+
+		protected $table = '{{tablename}}';
+
+		public function create() {
+
+			// 
+
+		}
+
+		public function remove() {
+
+			// 
+
+		}	
+
+	}
+	

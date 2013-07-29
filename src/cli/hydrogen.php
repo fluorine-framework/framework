@@ -12,7 +12,7 @@
 	
 	require_once(SYS .'cli/cliexception.php');
 	require_once(SYS .'cli/command.php');
-	require_once(SYS .'components/files/getfile.php');
+	require_once(SYS .'components/files/files.php');
 
 	/*
 	 * Command pattern:
@@ -26,6 +26,10 @@
 
 		public static function input($arguments) {
 
+			if(!defined("STDIN")) {
+				define("STDIN", fopen('php://stdin','r'));
+			}
+
 			$_argv = array();
 			$_argv['command']	= null;
 			$_argv['args'] 		= array();
@@ -33,6 +37,8 @@
 
 			$i = 0;
 			foreach($arguments as $k => $v) {
+
+				$v = strtolower($v);
 				if( substr($v, 0, 2) == '--') {
 					$_argv['options'][] = $v;
 				} else {
@@ -66,7 +72,7 @@
 
 			// Let's see if the command file exists.
 			$path = SYS .'cli/commands/'. $command .'.'. EXT;
-			if( ! File::exists($path)) {
+			if( ! File::exists($path, false)) {
 
 				throw new CLIException('Unable to load file.');
 			}
