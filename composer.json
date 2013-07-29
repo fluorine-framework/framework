@@ -17,5 +17,10 @@
 		"psr-0": {
 			"Flourine": "src/"
 		}
-	}
+	},
+	"extra": {
+        "branch-alias": {
+            "dev-master": "0.7.x-dev"
+        }
+    }
 }
