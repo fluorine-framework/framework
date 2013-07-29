@@ -172,7 +172,8 @@
 						$tpl->assign($key, $value);
 					}
 				}
-				$view = '../../'. APP .'view/'. $this->view->path;
+				$sep = DIRECTORY_SEPARATOR;
+				$view = '..'. $sep .'..'. $sep . APP .'view/'. $this->view->path;
 
 			} else {
 
