@@ -1,7 +1,7 @@
 {	
 	"name": "fluorine-framework/framework",
 	"description": "Fluorine Framework",
-	"version": "0.7.1",
+	"version": "0.7.2",
 	"keywords": ["fluorine", "framework", "php"],
 	"authors": [
 		{
@@ -17,6 +17,5 @@
 		"psr-0": {
 			"Flourine": "src/"
 		}
-	},
-	"minimum-stability": "dev"
+	}
 }
