@@ -172,25 +172,22 @@
 						$tpl->assign($key, $value);
 					}
 				}
-
 				$view = '../../'. APP .'view/'. $this->view->path;
 
 			} else {
 
 				$view = $this->view;
-
 				if($this->isJson === true) {
 
 					echo $view;
 					exit;
-
 				}
 			}
 
 			try {
-				File::get('template/'. $tplDir .'/template.php');
-				if(class_exists('Template\Model')) {
-					$tpl_class = new Template\model;
+				File::get(APP .'template/'. $tplDir .'/template.php');
+				if(class_exists('Template\Model\Template')) {
+					$tpl_class = new Template\Model\Template;
 					$tpl->assign('template', $tpl_class);
 				}
 			}
