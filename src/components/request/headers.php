@@ -29,7 +29,9 @@
 
 			if($name == '500') {
 				header('HTTP/1.1 500 Internal Server Error', true, 500);
-				trigger_error('ISE function called.', E_USER_ERROR);
+				echo file_get_contents(APP .'view/errors/500.php');
+				exit;
+				//trigger_error('ISE function called.', E_USER_ERROR);
 				//header("HTTP/1.0 404 Not Found", true);
 			} else {
 				header($name .': '. $value);

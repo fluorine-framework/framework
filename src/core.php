@@ -14,28 +14,8 @@
 	 *                       *
 	 *************************/
 	
-	require_once(COMPONENTS . 'error/error.php');
-
-
-	set_error_handler(function($code, $msg, $file, $line) {
-		Error::handler($code, $msg, $file, $line);
-	});
-	set_exception_handler(function($exception) {
-		Error::exception($exception);
-	});
-	register_shutdown_function(function() {
-		Error::fatal();
-	});
-
-
-
-
-
-
-
-
-
-
+	require_once(COMPONENTS .'error/error.php');
+	require_once(COMPONENTS .'error/whoops.php');
 	require_once(SYS . 'bootstrap.php');
 
 	
@@ -79,6 +59,7 @@
 			
 			Autoload::load();
 			Request::init();
+			Response::init();
 			Url::init();
 			Log::init();
 
