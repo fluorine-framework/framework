@@ -1,7 +1,7 @@
 {	
 	"name": "fluorine-framework/framework",
 	"description": "Fluorine Framework",
-	"version": "0.7.2",
+	"version": "0.7.3",
 	"keywords": ["fluorine", "framework", "php"],
 	"authors": [
 		{
@@ -20,7 +20,7 @@
 	},
 	"extra": {
         "branch-alias": {
-            "master": "0.7.2-dev"
+            "master": "0.7.3-dev"
         }
     }
 }
