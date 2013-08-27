@@ -149,7 +149,7 @@
 
 			$config = array(
 				'base_url'		=> null,
-				'tpl_dir'		=> APP .'template/'. $tplDir .'/',
+				'tpl_dir'		=> array(APP .'template/'. $tplDir .'/'),
 				'cache_dir'		=> APP .'tmp/',
 				'debug'			=> true,
 				'php_enabled'	=> true,
